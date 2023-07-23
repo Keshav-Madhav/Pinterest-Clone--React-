@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import IconButtons from "@mui/material/IconButton";
@@ -9,7 +9,15 @@ import FaceIcon from "@mui/icons-material/Face";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 
 
-function Header() {
+function Header(props) {
+    const [input, setInput]=useState("");
+
+    const onSeachSubmit= (e)=>{
+        e.preventDefault()
+        props.onSubmit(input);
+        console.log("Input: ",input);
+
+    }
     return (
         <Wrapper>
 
@@ -27,15 +35,15 @@ function Header() {
                 <a href="">Following</a>
             </FollowingButton>
 
-            <SearchWrapper>
+            <SearchWrapper> 
                 <SearchBarWrapper>
                     <IconButtons>
                         <SearchIcon />
                     </IconButtons>
 
                     <form>
-                        <input type="text"/>
-                        <button type="submit"></button>
+                        <input type="text" onChange={(e) =>setInput(e.target.value)}/>
+                        <button type="submit" onClick={onSeachSubmit}></button>
                     </form>
                 </SearchBarWrapper>
             </SearchWrapper>
