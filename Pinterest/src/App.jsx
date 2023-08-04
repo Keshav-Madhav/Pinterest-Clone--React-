@@ -17,20 +17,22 @@ function App() {
     });
   };
 
-  const onSeachSubmit = (term)=>{
-    getImages(term).then((res)=>{
-      let results=res.data.results;
-      let newPins=[
-        ...results,
-        ...pins,
-      ]
+  const onSearchSubmit = (term) => {
+  getImages(term).then((res) => {
+    let results = res.data.results;
+    let firstFiveResults = results.slice(0, 5);
+    let remainingResults = results.slice(5);
+    let newPins = [...remainingResults, ...pins];
 
-      newPins.sort(function(a,b){
-        return 0.5 - Math.random();
-      })
-      setNewPins(newPins);
+    newPins.sort(function (a, b) {
+      return 0.5 - Math.random();
     });
-  };
+
+    let pushPins = [...firstFiveResults, ...newPins];
+
+    setNewPins(pushPins);
+  });
+};
 
   const getNewPins=()=>{
     let promises=[];
@@ -61,7 +63,7 @@ function App() {
   return (
     <>
       <div className="App">
-        <Header onSubmit={onSeachSubmit}/>
+        <Header onSubmit={onSearchSubmit}/>
         <Mainboard pins={pins}/>
       </div>
     </>
